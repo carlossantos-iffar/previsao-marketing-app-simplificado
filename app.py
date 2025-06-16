@@ -25,9 +25,10 @@ for coluna in colunas:
 if st.button("🔍 Prever"):
     entrada_df = pd.DataFrame([entrada])
 
-    # Aplicar os encoders
-    for col in encoders:
-        entrada_df[col] = encoders[col].transform(entrada_df[col])
+    # Aplicar os encoders apenas nas colunas categóricas
+    for col in entrada_df.columns:
+        if col in encoders:
+            entrada_df[col] = encoders[col].transform([entrada_df[col][0]])
 
     # Escalar os dados
     entrada_scaled = scaler.transform(entrada_df)
